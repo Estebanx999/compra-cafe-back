@@ -1,0 +1,5 @@
+org.springframework.boot.EnvironmentPostProcessor=\
+com.compracafe.shared.infrastructure.config.ConfiguracionRequeridaValidator
+
+org.springframework.boot.diagnostics.FailureAnalyzer=\
+com.compracafe.shared.infrastructure.config.ConfiguracionFaltanteFailureAnalyzer
