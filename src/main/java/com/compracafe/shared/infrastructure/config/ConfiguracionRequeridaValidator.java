@@ -19,7 +19,8 @@ import org.springframework.core.env.ConfigurableEnvironment;
  */
 public class ConfiguracionRequeridaValidator implements EnvironmentPostProcessor, Ordered {
 
-    static final List<String> VARIABLES_REQUERIDAS = List.of("DB_NAME", "DB_USER", "DB_PASSWORD");
+    static final List<String> VARIABLES_REQUERIDAS =
+            List.of("DB_NAME", "DB_USER", "DB_PASSWORD", "CORS_ORIGENES_PERMITIDOS");
 
     @Override
     public void postProcessEnvironment(ConfigurableEnvironment environment, SpringApplication application) {
