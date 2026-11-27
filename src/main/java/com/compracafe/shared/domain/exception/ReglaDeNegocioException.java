@@ -17,7 +17,7 @@ package com.compracafe.shared.domain.exception;
  * throw new CajaSinSaldoException();
  * }</pre>
  */
-public abstract class ReglaDeNegocioException extends ExcepcionNegocio {
+public abstract non-sealed class ReglaDeNegocioException extends ExcepcionNegocio {
 
     protected ReglaDeNegocioException(String codigo, String mensaje) {
         super(codigo, mensaje);

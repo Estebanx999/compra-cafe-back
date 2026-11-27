@@ -13,8 +13,14 @@ import java.util.regex.Pattern;
  *
  * Java puro: el dominio no sabe de HTTP. La traducción a un estado HTTP la hace
  * la infraestructura web según el tipo de excepción.
+ *
+ * Sellada: solo admite las dos categorías que el manejador global sabe traducir
+ * ({@link RecursoNoEncontradoException} → 404, {@link ReglaDeNegocioException} → 409).
+ * Los módulos heredan de una de ellas, nunca de esta clase directamente; así ningún
+ * error de negocio puede terminar respondiendo un 500 por no tener categoría.
  */
-public abstract class ExcepcionNegocio extends RuntimeException {
+public abstract sealed class ExcepcionNegocio extends RuntimeException
+        permits RecursoNoEncontradoException, ReglaDeNegocioException {
 
     private static final Pattern FORMATO_CODIGO = Pattern.compile("[A-Z][A-Z0-9]*(_[A-Z0-9]+)*");
 

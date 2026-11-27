@@ -16,7 +16,7 @@ package com.compracafe.shared.domain.exception;
  * throw new ClienteNoEncontradoException(15);
  * }</pre>
  */
-public abstract class RecursoNoEncontradoException extends ExcepcionNegocio {
+public abstract non-sealed class RecursoNoEncontradoException extends ExcepcionNegocio {
 
     protected RecursoNoEncontradoException(String codigo, String mensaje) {
         super(codigo, mensaje);
