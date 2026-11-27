@@ -35,7 +35,7 @@ class ConfiguracionRequeridaValidatorTest {
         assertThatThrownBy(() -> validator.postProcessEnvironment(env, new SpringApplication()))
                 .isInstanceOf(ConfiguracionFaltanteException.class)
                 .hasMessageContaining("DB_PASSWORD")
-                .hasMessageContaining("copia .env.example a .env")
+                .hasMessageContaining("Copia .env.example a .env")
                 .satisfies(e -> assertThat(((ConfiguracionFaltanteException) e).getFaltantes())
                         .containsExactly("DB_PASSWORD"));
     }
