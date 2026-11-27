@@ -17,7 +17,8 @@ class ConfiguracionRequeridaValidatorTest {
         MockEnvironment env = new MockEnvironment()
                 .withProperty("DB_NAME", "compra_cafe")
                 .withProperty("DB_USER", "usuario")
-                .withProperty("DB_PASSWORD", "secreto");
+                .withProperty("DB_PASSWORD", "secreto")
+                .withProperty("CORS_ORIGENES_PERMITIDOS", "http://localhost:5173");
 
         assertThatCode(() -> validator.postProcessEnvironment(env, new SpringApplication()))
                 .doesNotThrowAnyException();
@@ -28,7 +29,8 @@ class ConfiguracionRequeridaValidatorTest {
         MockEnvironment env = new MockEnvironment()
                 .withProperty("DB_NAME", "compra_cafe")
                 .withProperty("DB_USER", "usuario")
-                .withProperty("DB_PASSWORD", "  ");
+                .withProperty("DB_PASSWORD", "  ")
+                .withProperty("CORS_ORIGENES_PERMITIDOS", "http://localhost:5173");
 
         assertThatThrownBy(() -> validator.postProcessEnvironment(env, new SpringApplication()))
                 .isInstanceOf(ConfiguracionFaltanteException.class)
