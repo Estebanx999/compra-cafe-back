@@ -1,0 +1,26 @@
+# PostgreSQL para desarrollo local.
+# Las credenciales vienen del archivo .env (ver .env.example).
+#
+# IMPORTANTE: no se monta nada en /docker-entrypoint-initdb.d.
+# El esquema de la base lo crea ÚNICAMENTE Flyway al arrancar la aplicación.
+services:
+  postgres:
+    image: postgres:17
+    container_name: compra-cafe-postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: ${DB_NAME:?Falta DB_NAME en .env (copia .env.example a .env y complétalo)}
+      POSTGRES_USER: ${DB_USER:?Falta DB_USER en .env (copia .env.example a .env y complétalo)}
+      POSTGRES_PASSWORD: ${DB_PASSWORD:?Falta DB_PASSWORD en .env (copia .env.example a .env y complétalo)}
+    ports:
+      - "${DB_PORT:-5432}:5432"
+    volumes:
+      - compra-cafe-pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U $${POSTGRES_USER} -d $${POSTGRES_DB}"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+volumes:
+  compra-cafe-pgdata:
