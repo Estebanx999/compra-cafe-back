@@ -49,7 +49,7 @@ class ManejadorGlobalErroresTest {
 
     @Test
     void recursoNoEncontradoResponde404ConSuCodigoYMensaje() throws Exception {
-        mockMvc.perform(get("/prueba/no-encontrado"))
+        mockMvc.perform(get("/api/prueba/no-encontrado"))
                 .andExpect(status().isNotFound())
                 .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_PROBLEM_JSON))
                 .andExpect(jsonPath("$.codigo").value("CLIENTE_NO_ENCONTRADO"))
@@ -61,7 +61,7 @@ class ManejadorGlobalErroresTest {
 
     @Test
     void reglaDeNegocioResponde409ConSuCodigoYMensaje() throws Exception {
-        mockMvc.perform(get("/prueba/regla"))
+        mockMvc.perform(get("/api/prueba/regla"))
                 .andExpect(status().isConflict())
                 .andExpect(jsonPath("$.codigo").value("CAJA_SIN_SALDO"))
                 .andExpect(jsonPath("$.detail").value("La caja no tiene saldo suficiente"))
@@ -73,7 +73,7 @@ class ManejadorGlobalErroresTest {
 
     @Test
     void validacionDelCuerpoResponde400ConLosCamposQueFallaronEnEspanol() throws Exception {
-        mockMvc.perform(post("/prueba/validacion")
+        mockMvc.perform(post("/api/prueba/validacion")
                         .header("Accept-Language", "en") // aun así debe responder en español
                         .contentType(MediaType.APPLICATION_JSON)
                         .content("""
@@ -91,7 +91,7 @@ class ManejadorGlobalErroresTest {
 
     @Test
     void validacionDeUnParametroResponde400ConElNombreDelParametro() throws Exception {
-        mockMvc.perform(get("/prueba/parametro").param("cantidad", "0"))
+        mockMvc.perform(get("/api/prueba/parametro").param("cantidad", "0"))
                 .andExpect(status().isBadRequest())
                 .andExpect(jsonPath("$.codigo").value("VALIDACION_FALLIDA"))
                 .andExpect(jsonPath("$.errores", hasSize(1)))
@@ -104,7 +104,7 @@ class ManejadorGlobalErroresTest {
 
     @Test
     void errorInesperadoResponde500GenericoSinDetalleInterno() throws Exception {
-        mockMvc.perform(get("/prueba/inesperado"))
+        mockMvc.perform(get("/api/prueba/inesperado"))
                 .andExpect(status().isInternalServerError())
                 .andExpect(jsonPath("$.codigo").value("ERROR_INTERNO"))
                 .andExpect(jsonPath("$.title").value("Error interno"))
@@ -119,7 +119,7 @@ class ManejadorGlobalErroresTest {
 
     @Test
     void jsonMalFormadoResponde400EnEspanol() throws Exception {
-        mockMvc.perform(post("/prueba/validacion")
+        mockMvc.perform(post("/api/prueba/validacion")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content("{ esto no es json"))
                 .andExpect(status().isBadRequest())
@@ -130,7 +130,7 @@ class ManejadorGlobalErroresTest {
 
     @Test
     void metodoNoPermitidoResponde405EnEspanol() throws Exception {
-        mockMvc.perform(delete("/prueba/regla"))
+        mockMvc.perform(delete("/api/prueba/regla"))
                 .andExpect(status().isMethodNotAllowed())
                 .andExpect(jsonPath("$.codigo").value("METODO_NO_PERMITIDO"))
                 .andExpect(sinStacktrace());
@@ -138,7 +138,7 @@ class ManejadorGlobalErroresTest {
 
     @Test
     void rutaInexistenteResponde404EnEspanol() throws Exception {
-        mockMvc.perform(get("/prueba/no-existe-esta-ruta"))
+        mockMvc.perform(get("/api/prueba/no-existe-esta-ruta"))
                 .andExpect(status().isNotFound())
                 .andExpect(jsonPath("$.codigo").value("RUTA_NO_ENCONTRADA"))
                 .andExpect(sinStacktrace());
